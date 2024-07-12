@@ -10,10 +10,10 @@ class Material(db.Model):
     measuring_unit: str = db.Column(db.String(80), nullable=False)
 
     # Relationship with other tables
-    # prices 1:1
+    # Prices 1:1
     price = db.relationship("Price", back_populates="material", uselist=False)
 
-    # # Stock N:M
-    # stock = db.relationship("Stock", back_populates="material")
+    # Stock 1:N
+    stock = db.relationship("Stock", back_populates="material")
 
     
