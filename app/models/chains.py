@@ -3,11 +3,11 @@ from app import db
 class Chain(db.Model):
     __tablename__ = "chains"
 
-    # ForeignKey of the Material table
+    # ForeignKey of the Stock table
     stock_id: int = db.Column(db.Integer, db.ForeignKey("stock.id"), primary_key=True)
 
     # Own attributes
-    meters: str = db.Column(db.Integer, nullable=False)
+    meters: str = db.Column(db.Float, nullable=False)
 
     # Relationship with other tables
     # Stock 1:1
