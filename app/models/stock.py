@@ -23,5 +23,8 @@ class Stock(db.Model):
     # Pipes 1:1
     pipes = db.relationship("Pipe", back_populates="stock", uselist=False)
 
+    # Fabris 1:1
+    fabrics = db.relationship("Fabric", back_populates="stock", uselist=False)
+
 
     

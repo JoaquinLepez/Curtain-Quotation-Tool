@@ -4,3 +4,4 @@ from .price import Price
 from .chains import Chain
 from .mechanism import Mechanism
 from .pipes import Pipe
+from .fabrics import Fabric
