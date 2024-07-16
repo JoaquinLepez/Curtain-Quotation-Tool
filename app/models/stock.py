@@ -14,4 +14,7 @@ class Stock(db.Model):
     # Materials 1:N
     material = db.relationship("Material", back_populates="stock")
 
+    # Chains 1:1
+    chains = db.relationship("Chain", back_populates="stock", uselist=False)
+
     
