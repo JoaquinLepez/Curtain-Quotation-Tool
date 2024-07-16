@@ -1,7 +1,7 @@
 import unittest
 import os
 from app import create_app, db
-from app.models import Stock, Material, Chain
+from app.models import Stock, Material, Chain, Mechanism
 
 
 class StockTasteCase(unittest.TestCase):
@@ -16,7 +16,10 @@ class StockTasteCase(unittest.TestCase):
         self.MEASURING_UNIT_TEST = "Metros cuadrados"
 
         # Chain
-        self.METERS_TEST = 5
+        self.METERS_TEST = 5.3
+
+        # Mechanism
+        self.UNITS_TEST = 3
 
         os.environ['FLASK_CONTEXT'] = 'testing'
         self.app = create_app()
@@ -41,6 +44,9 @@ class StockTasteCase(unittest.TestCase):
 
         self.assertIsNotNone(stock.chains)
         self.assertEqual(stock.chains.meters, self.METERS_TEST)
+        
+        self.assertIsNotNone(stock.mechanisms)
+        self.assertEqual(stock.mechanisms.units, self.UNITS_TEST)
 
     def __get_stock(self):
         material = Material()
@@ -51,10 +57,14 @@ class StockTasteCase(unittest.TestCase):
         chain = Chain()
         chain.meters = self.METERS_TEST
 
+        mechanism = Mechanism()
+        mechanism.units = self.UNITS_TEST
+
         stock = Stock()
         stock.amount = self.AMOUNT_TEST
         stock.material = material
         stock.chains = chain
+        stock.mechanisms = mechanism
 
         return stock
 
