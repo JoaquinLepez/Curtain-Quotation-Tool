@@ -20,5 +20,8 @@ class Stock(db.Model):
     # Mechanisms 1:1
     mechanisms = db.relationship("Mechanism", back_populates="stock", uselist=False)
 
+    # Pipes 1:1
+    pipes = db.relationship("Pipe", back_populates="stock", uselist=False)
+
 
     

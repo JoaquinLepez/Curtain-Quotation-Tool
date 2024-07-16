@@ -1,7 +1,7 @@
 import unittest
 import os
 from app import create_app, db
-from app.models import Stock, Material, Chain, Mechanism
+from app.models import Stock, Material, Chain, Mechanism, Pipe
 
 
 class StockTasteCase(unittest.TestCase):
@@ -15,7 +15,7 @@ class StockTasteCase(unittest.TestCase):
         self.DESCRIPTION_TEST = "Tela color gris de blackout"
         self.MEASURING_UNIT_TEST = "Metros cuadrados"
 
-        # Chain
+        # Chain - Pipe
         self.METERS_TEST = 5.3
 
         # Mechanism
@@ -48,6 +48,9 @@ class StockTasteCase(unittest.TestCase):
         self.assertIsNotNone(stock.mechanisms)
         self.assertEqual(stock.mechanisms.units, self.UNITS_TEST)
 
+        self.assertIsNotNone(stock.pipes)
+        self.assertEqual(stock.pipes.meters, self.METERS_TEST)
+
     def __get_stock(self):
         material = Material()
         material.name = self.NAME_TEST
@@ -60,11 +63,15 @@ class StockTasteCase(unittest.TestCase):
         mechanism = Mechanism()
         mechanism.units = self.UNITS_TEST
 
+        pipe = Pipe()
+        pipe.meters = self.METERS_TEST
+
         stock = Stock()
         stock.amount = self.AMOUNT_TEST
         stock.material = material
         stock.chains = chain
         stock.mechanisms = mechanism
+        stock.pipes = pipe
 
         return stock
 
