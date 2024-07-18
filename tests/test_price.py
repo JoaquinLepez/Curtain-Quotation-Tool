@@ -2,7 +2,9 @@ import unittest
 import os
 from app import create_app, db
 from app.models import Price, Material
+from app.services import PriceService
 
+price_service = PriceService()
 
 class PriceTasteCase(unittest.TestCase):
 
@@ -34,8 +36,51 @@ class PriceTasteCase(unittest.TestCase):
         self.assertEqual(price.material.name, self.NAME_TEST)
         self.assertEqual(price.material.description, self.DESCRIPTION_TEST)
         self.assertEqual(price.material.measuring_unit, self.MEASURING_UNIT_TEST)
+    
+    def test_price_save(self):
+        price = self.__get_price()
+        price_service.save(price)
+        self.assertGreaterEqual(price.id,1)
+        self.assertEqual(price.price, self.PRICE_TEST)
+        self.assertEqual(price.material.name, self.NAME_TEST)
+        self.assertEqual(price.material.description, self.DESCRIPTION_TEST)
+        self.assertEqual(price.material.measuring_unit, self.MEASURING_UNIT_TEST)
+    
+    def test_price_update(self):
+        price = self.__get_price()
+        price_service.save(price)
 
-    def __get_price(self):
+        price.price = 123
+        price.material.name = "Pipe test"
+
+        price_service.update(price, price.id)
+        self.assertEqual(price.price, 123)
+        self.assertEqual(price.material.name, "Pipe test")
+    
+    def test_price_delete(self):
+        price = self.__get_price()
+        price_service.save(price)
+        price_service.delete(price.id)
+        self.assertIsNone(price_service.find(price.id))
+    
+    def test_price_all(self):
+        price = self.__get_price()
+        price_service.save(price)
+        self.assertGreaterEqual(len(price_service.all()),1)
+    
+    def test_price_find(self):
+        price = self.__get_price()
+        price_service.save(price)
+
+        self.assertEqual(price_service.find(price.id), price)
+    
+    def test_price_find_by_id_material(self):
+        price = self.__get_price()
+        price_service.save(price)
+
+        self.assertEqual(price_service.find_by_material_id(price.material_id), price)
+
+    def __get_price(self) -> Price:
         price = Price()
         price.price = self.PRICE_TEST
 
@@ -50,3 +95,5 @@ class PriceTasteCase(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
